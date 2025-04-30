@@ -22,5 +22,8 @@ public class ImageFile {
     @Lob
     private String ocrText;
 
+    @Lob
+    private String analyzedText;
+
     private Instant uploadedAt = Instant.now();
 }

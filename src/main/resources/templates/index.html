@@ -27,8 +27,20 @@
         <p class="text-sm text-gray-600 mt-2 whitespace-pre-line" th:if="${file.ocrText}" th:text="${file.ocrText}"></p>
       </div>
     </div>
-  </div>
+    <td th:if="${file.analyzedText}">
+      <button onclick="showAnalysis('${file.id}')">View Analysis</button>
+      <div id="analysis-${file.id}" style="display:none;">
+        <pre th:text="${file.analyzedText}"></pre>
+      </div>
+    </td>
 
+    <script>
+      function showAnalysis(id) {
+        const div = document.getElementById('analysis-' + id);
+        div.style.display = div.style.display === 'none' ? 'block' : 'none';
+      }
+    </script>
+  </div>
 </div>
 </body>
 </html>

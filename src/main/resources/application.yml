@@ -15,3 +15,8 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
 
+openai:
+  api:
+    key:
+    url: https://api.openai.com/v1/chat/completions
+
