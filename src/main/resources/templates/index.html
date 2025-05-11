@@ -21,26 +21,30 @@
       <img th:src="@{'/image/' + ${file.id}}" class="h-24 w-auto border rounded" alt="Preview"/>
       <div class="flex-grow">
         <p class="font-semibold" th:text="${file.name}"></p>
-        <form th:action="@{'/ocr/' + ${file.id}}" method="post" class="mt-2">
+        <form th:action="@{/ocr/{id}(id=${file.id})}" method="post" class="mt-2">
           <button class="bg-green-600 text-white px-3 py-1 rounded">Run OCR</button>
         </form>
         <p class="text-sm text-gray-600 mt-2 whitespace-pre-line" th:if="${file.ocrText}" th:text="${file.ocrText}"></p>
       </div>
     </div>
-    <td th:if="${file.analyzedText}">
-      <button onclick="showAnalysis('${file.id}')">View Analysis</button>
-      <div id="analysis-${file.id}" style="display:none;">
+    <div th:if="${file.analyzedText}">
+      <!-- Store ID in data attribute instead of direct string concatenation -->
+      <button class="view-analysis-btn"
+              th:data-file-id="${file.id}"
+              onclick="showAnalysis(this)">View Analysis</button>
+      <div th:id="'analysis-' + ${file.id}" style="display:none;">
         <pre th:text="${file.analyzedText}"></pre>
       </div>
-    </td>
-
-    <script>
-      function showAnalysis(id) {
-        const div = document.getElementById('analysis-' + id);
-        div.style.display = div.style.display === 'none' ? 'block' : 'none';
-      }
-    </script>
+    </div>
   </div>
 </div>
+
+<script>
+  function showAnalysis(button) {
+    const fileId = button.dataset.fileId;
+    const div = document.getElementById('analysis-' + fileId);
+    div.style.display = div.style.display === 'none' ? 'block' : 'none';
+  }
+</script>
 </body>
 </html>
